@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ezimnandi Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: shweshwe-print hero band, then a two-column menu board, then visit/order strip */
+:root{
+  --bg:#FAFAF7; --fg:#1C2240; --muted:#5A6080; --indigo:#23305E; --indigo-2:#2E3D74;
+  --gold:#E3A21A; --line:#DCDDE6; --card:#FFFFFF; --on-indigo:#F4F1E8;
+  --display:"Bricolage Grotesque",Georgia,serif; --body:"Figtree",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12152A; --fg:#ECEBF2; --muted:#A3A7C2; --indigo:#1A2347; --indigo-2:#26346A;
+  --gold:#F0B53A; --line:#2B3156; --card:#191D38; --on-indigo:#F4F1E8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12152A; --fg:#ECEBF2; --muted:#A3A7C2; --indigo:#1A2347; --indigo-2:#26346A;
+  --gold:#F0B53A; --line:#2B3156; --card:#191D38; --on-indigo:#F4F1E8; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px}
+.demo{background:var(--gold);color:#1C2240;font-size:13px;text-align:center;padding:6px 16px;font-weight:600}
+header{background:var(--indigo);color:var(--on-indigo);position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;opacity:.18;
+  background-image:radial-gradient(circle at 50% 50%,var(--on-indigo) 1.6px,transparent 2px),
+  radial-gradient(circle at 0 0,transparent 9px,var(--on-indigo) 9.5px,var(--on-indigo) 10.5px,transparent 11px);
+  background-size:22px 22px,44px 44px}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:18px;position:relative;gap:12px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.01em}
+.logo span{color:var(--gold)}
+nav a{color:var(--on-indigo);text-decoration:none;font-weight:500;font-size:15px}
+nav .links{display:flex;gap:20px;flex-wrap:wrap}
+.hero{position:relative;padding-block:56px 72px;max-width:640px}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);font-weight:600}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,72px);line-height:1;margin:.25em 0 .3em;text-wrap:balance;letter-spacing:-.02em}
+.hero p{font-size:18px;max-width:52ch;opacity:.9;margin:0 0 28px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--gold)}
+.btn.primary{background:var(--gold);color:#1C2240}
+.btn.ghost{color:var(--on-indigo)}
+.btn:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+section{padding-block:64px}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,40px);margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 32px}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}
+.menu h3{font-family:var(--display);font-weight:500;font-size:14px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);border-bottom:2px solid var(--fg);padding-bottom:8px;margin:0 0 8px}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding-block:14px;border-bottom:1px dashed var(--line)}
+.item b{font-weight:600;font-size:17px}
+.item .price{font-variant-numeric:tabular-nums;font-weight:600;color:var(--indigo-2)}
+:root[data-theme="dark"] .item .price{color:var(--gold)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .item .price{color:var(--gold)}}
+.item small{grid-column:1/-1;color:var(--muted);font-size:14px}
+.tag{font-size:11px;font-weight:600;background:var(--gold);color:#1C2240;padding:1px 7px;border-radius:4px;margin-left:6px;vertical-align:2px}
+.visit{background:var(--card);border-block:1px solid var(--line)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px}
+.grid3 h3{font-family:var(--display);font-size:20px;margin:0 0 8px}
+.hours{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.hours td{padding:4px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right}
+.wa{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.wa code{font:600 18px var(--body);background:var(--bg);padding:6px 12px;border-radius:8px;border:1px solid var(--line);user-select:all}
+button{font:600 14px var(--body);padding:8px 14px;border-radius:999px;border:2px solid var(--indigo-2);background:transparent;color:var(--fg);cursor:pointer}
+footer{padding-block:32px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="demo">Demo website built by Andisa Mtshali. Ezimnandi Kitchen is a fictional business.</div>
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">Ezimnandi<span>.</span></div>
+      <div class="links"><a href="#menu">Menu</a><a href="#visit">Visit</a><a href="#order">Order</a></div>
+    </nav>
+    <div class="hero">
+      <div class="eyebrow">Orlando West · Soweto · Since 2014</div>
+      <h1>Kasi food, made slow and served proud.</h1>
+      <p>Kotas stacked high, Sunday-style pap and wors every day, and mogodu the way gogo made it. Eat in, take away, or order on WhatsApp.</p>
+      <div class="btns"><a class="btn primary" href="#order">Order on WhatsApp</a><a class="btn ghost" href="#menu">See the menu</a></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="menu"><div class="wrap">
+  <h2>The menu</h2>
+  <p class="sub">Prices include VAT. Everything is cooked fresh, so busy Saturdays may take a little longer.</p>
+  <div class="menu">
+    <div>
+      <h3>Kotas &amp; quarters</h3>
+      <div class="item"><b>Classic Kota</b><span class="price">R45</span><small>Chips, polony, atchar, cheese on a quarter loaf</small></div>
+      <div class="item"><b>The Full House <span class="tag">Popular</span></b><span class="price">R75</span><small>Russian, vienna, egg, cheese, chips, atchar, special sauce</small></div>
+      <div class="item"><b>Beef Bunny Chow</b><span class="price">R85</span><small>Slow-cooked beef curry in a hollowed quarter loaf</small></div>
+      <div class="item"><b>Veggie Kota</b><span class="price">R50</span><small>Chips, chakalaka, cheese, grilled mushrooms</small></div>
+    </div>
+    <div>
+      <h3>Plates</h3>
+      <div class="item"><b>Pap &amp; Wors</b><span class="price">R85</span><small>Boerewors, stiff pap, chakalaka and tomato gravy</small></div>
+      <div class="item"><b>Mogodu Wednesday <span class="tag">Wed only</span></b><span class="price">R95</span><small>Tripe stew with dombolo or pap</small></div>
+      <div class="item"><b>Braai Chicken Quarter</b><span class="price">R80</span><small>Flame-grilled, with pap, spinach and beetroot salad</small></div>
+      <div class="item"><b>Umleqwa Stew</b><span class="price">R110</span><small>Free-range hard-body chicken, samp and beans</small></div>
+    </div>
+    <div>
+      <h3>Sweet &amp; drinks</h3>
+      <div class="item"><b>Malva Pudding</b><span class="price">R45</span><small>Warm, with custard</small></div>
+      <div class="item"><b>Vetkoek &amp; Jam</b><span class="price">R25</span><small>Two vetkoek, apricot jam</small></div>
+      <div class="item"><b>Mageu</b><span class="price">R20</span><small>Cold, 500ml</small></div>
+      <div class="item"><b>Rooibos Iced Tea</b><span class="price">R28</span><small>House-brewed, lemon and honey</small></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="visit" id="visit"><div class="wrap grid3">
+  <div>
+    <h3>Opening hours</h3>
+    <table class="hours">
+      <tr><td>Mon – Thu</td><td>10:00 – 20:00</td></tr>
+      <tr><td>Fri – Sat</td><td>10:00 – 22:00</td></tr>
+      <tr><td>Sunday</td><td>11:00 – 18:00</td></tr>
+      <tr><td>Public holidays</td><td>11:00 – 18:00</td></tr>
+    </table>
+  </div>
+  <div>
+    <h3>Find us</h3>
+    <p>Corner of Mokoena &amp; Ngakane Streets<br>Orlando West, Soweto, 1804</p>
+    <p>Street parking out front. Five minutes' walk from the Orlando taxi rank.</p>
+  </div>
+  <div id="order">
+    <h3>Order on WhatsApp</h3>
+    <p>Send your order and pickup time. We confirm within 10 minutes.</p>
+    <div class="wa"><code id="num">071 555 0142</code><button id="copy" type="button">Copy number</button></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">© 2026 Ezimnandi Kitchen (fictional). Site design and build: Andisa Mtshali.</div></footer>
+
+<script>
+document.getElementById('copy').addEventListener('click',function(){
+  var b=this,t=document.getElementById('num').textContent;
+  function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy number'},1500)}
+  try{navigator.clipboard.writeText(t).then(done,function(){sel()})}catch(e){sel()}
+  function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('num'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press copy'}
+});
+</script>
+</body>
+</html>

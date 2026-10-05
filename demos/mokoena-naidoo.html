@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mokoena Naidoo Attorneys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: asymmetric split hero (statement left, consult card right), ruled practice-area index, form footer */
+:root{
+  --bg:#F3F5F5; --fg:#15202B; --muted:#56626E; --accent:#0F5C55; --accent-soft:#DCEBE8;
+  --line:#D3D9DC; --card:#FFFFFF;
+  --display:"Instrument Serif",Georgia,"Times New Roman",serif; --body:"Public Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1519; --fg:#E7ECEE; --muted:#9AA7AF; --accent:#5BB8AC; --accent-soft:#16302D;
+  --line:#25323A; --card:#141E23; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1519; --fg:#E7ECEE; --muted:#9AA7AF; --accent:#5BB8AC; --accent-soft:#16302D;
+  --line:#25323A; --card:#141E23; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.65 var(--body)}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+.demo{background:var(--accent);color:var(--bg);font-size:13px;text-align:center;padding:6px 16px;font-weight:500}
+nav{display:flex;justify-content:space-between;align-items:baseline;padding-block:22px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-size:26px;line-height:1}
+.logo i{color:var(--accent)}
+nav .links{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
+nav a{color:var(--fg);text-decoration:none}
+nav a:hover{color:var(--accent)}
+.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:56px;padding-block:64px;align-items:start}
+.hero > *{min-width:0}
+@media (max-width:820px){.hero{grid-template-columns:1fr;gap:32px}}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,6.5vw,76px);line-height:1.02;margin:.2em 0 .35em;text-wrap:balance;letter-spacing:-.01em}
+h1 i{color:var(--accent)}
+.lede{font-size:18px;color:var(--muted);max-width:52ch;margin:0}
+.facts{display:flex;gap:36px;margin-top:36px;flex-wrap:wrap}
+.facts div{font-size:13px;color:var(--muted)}
+.facts b{display:block;font-family:var(--display);font-weight:400;font-size:34px;color:var(--fg);line-height:1.1;font-variant-numeric:tabular-nums}
+.consult{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:28px}
+.consult h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0 0 4px}
+.consult p{color:var(--muted);font-size:14px;margin:0 0 18px}
+label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
+input,select,textarea{width:100%;font:15px var(--body);padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--fg)}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+button{margin-top:18px;width:100%;font:600 15px var(--body);padding:12px;border:0;border-radius:4px;background:var(--accent);color:var(--bg);cursor:pointer}
+.ok{margin-top:14px;padding:12px;background:var(--accent-soft);border-radius:4px;font-size:14px}
+section{padding-block:72px;border-top:1px solid var(--line)}
+.sechead{display:grid;grid-template-columns:1fr 2fr;gap:40px;margin-bottom:28px}
+@media (max-width:820px){.sechead{grid-template-columns:1fr;gap:8px}}
+h2.big{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.5vw,48px);margin:0;line-height:1.05}
+.sechead p{color:var(--muted);margin:0;max-width:60ch}
+.areas{list-style:none;padding:0;margin:0}
+.areas li{display:grid;grid-template-columns:1fr 2fr auto;gap:24px;padding-block:22px;border-bottom:1px solid var(--line);align-items:baseline}
+.areas li > *{min-width:0}
+@media (max-width:820px){.areas li{grid-template-columns:1fr;gap:4px}}
+.areas h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0}
+.areas p{margin:0;color:var(--muted)}
+.fee{font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px}
+.mono{width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--display);font-size:26px;margin-bottom:12px}
+.team h3{margin:0;font-size:18px;font-weight:600}
+.team .role{font-size:14px;color:var(--accent);margin:2px 0 8px}
+.team p{margin:0;color:var(--muted);font-size:15px}
+footer{border-top:1px solid var(--line);padding-block:32px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="demo">Demo website built by Andisa Mtshali. Mokoena Naidoo Attorneys is a fictional firm.</div>
+<div class="wrap">
+  <nav>
+    <div class="logo">Mokoena <i>&amp;</i> Naidoo</div>
+    <div class="links"><a href="#areas">Practice areas</a><a href="#team">Attorneys</a><a href="#consult">Book a consultation</a></div>
+  </nav>
+
+  <div class="hero">
+    <div>
+      <div class="kicker">Attorneys, Notaries &amp; Conveyancers · Johannesburg</div>
+      <h1>Clear legal advice, in <i>plain language</i>.</h1>
+      <p class="lede">We help families, small businesses and first-time home buyers across Gauteng. You'll always know what's happening on your matter and what it will cost before we start.</p>
+      <div class="facts">
+        <div><b>18</b>years in practice</div>
+        <div><b>2,400+</b>property transfers</div>
+        <div><b>4</b>official languages</div>
+      </div>
+    </div>
+    <form class="consult" id="consult">
+      <h2>Book a consultation</h2>
+      <p>First 30-minute consultation: R650. We reply within one working day.</p>
+      <label for="name">Full name</label><input id="name" required value="Thandi Khumalo">
+      <label for="phone">Phone</label><input id="phone" type="tel" required value="082 000 1234">
+      <label for="area">Matter type</label>
+      <select id="area"><option>Conveyancing</option><option selected>Wills &amp; estates</option><option>Family law</option><option>Labour &amp; CCMA</option><option>Business contracts</option></select>
+      <label for="msg">Briefly, how can we help?</label>
+      <textarea id="msg">I'd like to draw up a will and understand how my property would be handled.</textarea>
+      <button type="submit">Request consultation</button>
+      <div class="ok" id="ok" hidden>This is a demo, so no request was sent. On a live site this form would email the firm and add the enquiry to their client system.</div>
+    </form>
+  </div>
+</div>
+
+<section id="areas"><div class="wrap">
+  <div class="sechead"><h2 class="big">Practice areas</h2><p>Fixed fees where we can, an estimate in writing where we can't. Conveyancing fees follow the standard guideline tariff, based on the purchase price.</p></div>
+  <ul class="areas">
+    <li><h3>Conveyancing</h3><p>Property transfers, bond registrations and cancellations for buyers, sellers and banks.</p><span class="fee">Guideline tariff</span></li>
+    <li><h3>Wills &amp; estates</h3><p>Wills, trusts and winding up deceased estates with the Master of the High Court.</p><span class="fee">Wills from R1,500</span></li>
+    <li><h3>Family law</h3><p>Divorce, maintenance, parenting plans and antenuptial contracts.</p><span class="fee">ANCs from R3,200</span></li>
+    <li><h3>Labour &amp; CCMA</h3><p>Unfair dismissal, disciplinary hearings and CCMA representation for employers and employees.</p><span class="fee">Quoted per matter</span></li>
+    <li><h3>Business contracts</h3><p>Shareholder agreements, service contracts and POPIA compliance reviews for SMEs.</p><span class="fee">From R4,500</span></li>
+  </ul>
+</div></section>
+
+<section id="team"><div class="wrap">
+  <div class="sechead"><h2 class="big">Our attorneys</h2><p>Every client works directly with an admitted attorney, not just a paralegal.</p></div>
+  <div class="team">
+    <div><div class="mono">LM</div><h3>Lerato Mokoena</h3><div class="role">Director · Conveyancer</div><p>Property and estates. Speaks English, Sesotho and isiZulu.</p></div>
+    <div><div class="mono">PN</div><h3>Priya Naidoo</h3><div class="role">Director · Notary</div><p>Family law and antenuptial contracts. Mediator.</p></div>
+    <div><div class="mono">SD</div><h3>Sipho Dube</h3><div class="role">Senior Associate</div><p>Labour law and CCMA work for SMEs and employees.</p></div>
+  </div>
+</div></section>
+
+<div class="wrap">
+  <footer>
+    <span>Fictional firm for demo purposes · 3rd Floor, 21 Juta Street, Braamfontein</span>
+    <span>Design &amp; build: Andisa Mtshali</span>
+  </footer>
+</div>
+
+<script>
+document.getElementById('consult').addEventListener('submit',function(e){
+  e.preventDefault();document.getElementById('ok').hidden=false;
+});
+</script>
+</body>
+</html>

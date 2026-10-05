@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Andisa Mtshali Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: oversized expanded-type intro, work grid with palette "swatch" previews, services price list, numbered process, contact */
+:root{
+  --bg:#F1F2EE; --fg:#111318; --muted:#5D616B; --line:#D6D8D1; --card:#FFFFFF;
+  --accent:#2638E8; --accent-fg:#FFFFFF;
+  --display:"Archivo",system-ui,sans-serif; --body:"Archivo",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1016; --fg:#EDEEF2; --muted:#9A9FAC; --line:#262A35; --card:#151821;
+  --accent:#7C8BFF; --accent-fg:#0E1016; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1016; --fg:#EDEEF2; --muted:#9A9FAC; --line:#262A35; --card:#151821;
+  --accent:#7C8BFF; --accent-fg:#0E1016; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:17px/1.6 var(--body);font-stretch:100%}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+.label{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;gap:12px;flex-wrap:wrap}
+nav .me{font-weight:800;font-stretch:125%;letter-spacing:-.01em}
+nav .links{display:flex;gap:20px;font-size:15px;flex-wrap:wrap}
+nav a{color:var(--fg);text-decoration:none}
+nav a:hover,nav a:focus-visible{color:var(--accent)}
+.avail{display:inline-flex;align-items:center;gap:8px}
+.avail::before{content:"";width:8px;height:8px;border-radius:50%;background:#22A35A}
+.intro{padding-block:48px 64px}
+h1{font-family:var(--display);font-weight:800;font-stretch:125%;font-size:clamp(38px,7.4vw,92px);line-height:.98;letter-spacing:-.035em;margin:18px 0 28px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+.intro p{max-width:58ch;font-size:19px;color:var(--muted);margin:0 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 22px;border-radius:8px;font-weight:500;text-decoration:none;border:1.5px solid var(--fg);color:var(--fg)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+section{padding-block:64px;border-top:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+h2{font-weight:800;font-stretch:115%;font-size:clamp(28px,4vw,44px);letter-spacing:-.02em;margin:0}
+.work{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.proj{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:var(--fg);transition:transform .2s ease,border-color .2s ease}
+.proj:hover,.proj:focus-visible{transform:translateY(-3px);border-color:var(--accent);outline:none}
+.swatch{height:150px;position:relative;display:flex;align-items:flex-end;padding:16px}
+.swatch .t{font-weight:800;font-stretch:110%;font-size:26px;line-height:1;letter-spacing:-.02em}
+.s1{background:#23305E;color:#F4F1E8;background-image:radial-gradient(circle,rgba(244,241,232,.22) 1.5px,transparent 2px);background-size:18px 18px}
+.s1 .t{font-family:Georgia,serif}.s1 i{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;background:#E3A21A}
+.s2{background:#F3F5F5;color:#15202B;border-bottom:1px solid #D3D9DC}
+.s2 .t{font-family:Georgia,serif;font-weight:400;font-size:30px}.s2 .t b{color:#0F5C55;font-weight:400;font-style:italic}
+.s3{background:#1C1A22;color:#ECE9F1;display:grid;grid-template-rows:1fr auto;align-items:stretch}
+.bars{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;align-items:end;height:70px}
+.bars span{background:#F06A9A;border-radius:3px 3px 0 0}
+.bars span:nth-child(3n){background:#5FD39A}
+.proj.feature{display:grid;grid-template-columns:1.2fr 1fr;margin-bottom:20px}
+.proj.feature + .proj.feature{grid-template-columns:1fr 1.2fr}
+.proj.feature + .proj.feature .swatch{order:2}
+@media (max-width:760px){.proj.feature + .proj.feature{grid-template-columns:1fr}.proj.feature + .proj.feature .swatch{order:0}}
+.proj.feature > *{min-width:0}
+@media (max-width:760px){.proj.feature{grid-template-columns:1fr}}
+.s4{background:radial-gradient(70% 60% at 80% 100%,rgba(255,176,32,.35),transparent 70%),linear-gradient(#05070F,#141C38);color:#EEF0F5;min-height:220px;height:auto;align-items:flex-end}
+.s4 .t{font-size:clamp(28px,4vw,44px);letter-spacing:-.04em;position:relative}
+.s4 .t b{color:#FFB020}
+.s4 .sun{position:absolute;top:24px;right:32px;width:44px;height:44px;border-radius:50%;background:#FFE7A3;box-shadow:0 0 60px 20px rgba(255,194,74,.45)}
+.s4 .roof{position:absolute;right:28%;bottom:26px;width:120px;height:46px;background:repeating-linear-gradient(90deg,#1E3766 0 26px,#0F1830 26px 30px);clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);opacity:.9}
+@media (max-width:760px){.s4 .roof{display:none}}
+.s5{background-color:#0A0D0C;color:#ECEFE9;min-height:220px;height:auto;
+  background-image:repeating-radial-gradient(ellipse at 70% 40%,transparent 0 14px,rgba(199,211,193,.22) 14px 15px),radial-gradient(60% 70% at 15% 80%,rgba(255,106,43,.35),transparent 70%)}
+.s5 .t{font-size:clamp(26px,3.6vw,40px);letter-spacing:-.04em;position:relative}
+.s5 .t b{color:#FF6A2B}
+.pbody{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pbody h3{margin:0;font-size:19px;font-weight:800;font-stretch:105%}
+.pbody p{margin:0;color:var(--muted);font-size:15px}
+.stack{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.stack span{font:500 11px var(--mono);padding:3px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--line)}
+.open{font:500 13px var(--mono);color:var(--accent)}
+.real{margin-top:20px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px}
+.real > *{min-width:0}
+@media (max-width:640px){.real{grid-template-columns:1fr}}
+.real .badge{font:500 12px var(--mono);background:var(--accent);color:var(--accent-fg);padding:6px 10px;border-radius:6px;white-space:nowrap}
+.real h3{margin:0 0 6px;font-size:19px}
+.real p{margin:0;color:var(--muted);font-size:15px}
+.edu{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:start}
+.qual{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap}
+.qhead h3{margin:0;font-size:20px;font-weight:800;font-stretch:105%}
+.status{font:500 12px var(--mono);color:var(--muted)}
+.status.now{color:var(--accent)}
+.qnote{margin:-10px 0 0;color:var(--muted);font-size:15px}
+.group{display:flex;flex-direction:column;gap:8px}
+.mods{display:flex;flex-wrap:wrap;gap:6px}
+.mods span{font-size:14px;padding:4px 10px;border-radius:6px;border:1px solid var(--line);background:var(--bg)}
+.mods span.d{border-color:var(--accent);color:var(--accent);font-weight:500}
+.mods span.d::before{content:"★ "}
+.star{color:var(--accent)}
+.prices{width:100%;border-collapse:collapse}
+.prices td{padding:20px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.prices td:first-child{width:38%;padding-right:20px}
+.prices h3{margin:0;font-size:20px;font-weight:800;font-stretch:105%}
+.prices p{margin:0;color:var(--muted);font-size:15px}
+.prices .from{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;padding-left:16px}
+.prices .from b{display:block;font-size:22px;font-weight:800;font-stretch:110%}
+.prices .from small{color:var(--muted);font-size:13px}
+@media (max-width:640px){.prices td{display:block;width:auto!important;padding:4px 0;border:0;text-align:left!important;padding-left:0!important}.prices tr{display:block;padding:16px 0;border-bottom:1px solid var(--line)}}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid var(--fg);padding-top:14px}
+.steps li::before{content:counter(s,decimal-leading-zero);font:500 13px var(--mono);color:var(--accent)}
+.steps h3{margin:6px 0 6px;font-size:18px}
+.steps p{margin:0;color:var(--muted);font-size:15px}
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.cbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.cbox code{font:500 16px var(--mono);user-select:all;word-break:break-all}
+.cbox a{color:var(--accent);font-weight:500}
+.cbox button{align-self:flex-start;font:500 13px var(--body);padding:7px 12px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+footer{padding-block:32px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){.proj{transition:none}.proj:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <span class="me">Andisa Mtshali</span>
+    <span class="links"><a href="#work">Work</a><a href="#education">Education</a><a href="#services">Services</a><a href="#contact">Contact</a></span>
+  </nav>
+
+  <div class="intro">
+    <span class="label avail">Taking new projects · South Africa, working worldwide</span>
+    <h1>Websites and web apps that <em>bring in customers.</em></h1>
+    <p>I'm a full-stack developer (Django, React, Next.js, PostgreSQL) with an IT diploma, now studying towards a BSc in IT. I spent the last year as a developer at ManTech Holdings building production software. Now I build sites, booking systems and custom tools for small businesses and startups.</p>
+    <div class="cta"><a class="btn primary" href="#contact">Start a project</a><a class="btn" href="#work">See my work</a></div>
+  </div>
+</div>
+
+<section id="work"><div class="wrap">
+  <div class="head"><h2>Selected work</h2><span class="label">Demo builds · open them live</span></div>
+  <a class="proj feature" href="https://sunvault-solar.vercel.app" target="_blank" rel="noopener">
+    <div class="swatch s4"><span class="sun"></span><span class="roof"></span><span class="t">Keep the <b>lights</b> on.</span></div>
+    <div class="pbody"><h3>Sunvault Solar: scroll-driven website</h3><p>Interactive site for a solar installer. Scrolling plays one day as a house goes dark in loadshedding, gets panels and a battery, and stays lit at night. Includes a preloader, smooth scrolling and a pinned canvas animation.</p>
+    <div class="stack"><span>Next.js</span><span>React</span><span>GSAP ScrollTrigger</span><span>Lenis</span><span>Canvas</span></div><span class="open">Open live demo →</span></div>
+  </a>
+  <a class="proj feature" href="https://veld.vercel.app" target="_blank" rel="noopener">
+    <div class="swatch s5"><span class="t">Find buildable land <b>first.</b></span></div>
+    <div class="pbody"><h3>Veld: SaaS product website</h3><p>Marketing site for a renewable-energy site-selection platform. Scrolling builds a live contour map layer by layer (terrain, sunlight, grid capacity, no-go zones) and ends on a ranked shortlist of land parcels.</p>
+    <div class="stack"><span>Next.js</span><span>React</span><span>GSAP ScrollTrigger</span><span>Lenis</span><span>Canvas</span><span>Data viz</span></div><span class="open">Open live demo →</span></div>
+  </a>
+  <div class="work">
+    <a class="proj" href="demos/ezimnandi.html" target="_blank" rel="noopener">
+      <div class="swatch s1"><i></i><span class="t">Ezimnandi.</span></div>
+      <div class="pbody"><h3>Restaurant website</h3><p>One-page site for a kasi eatery: menu in rand, opening hours, and ordering by WhatsApp.</p>
+      <div class="stack"><span>HTML/CSS</span><span>Responsive</span><span>Dark mode</span></div><span class="open">Open live demo →</span></div>
+    </a>
+    <a class="proj" href="demos/mokoena-naidoo.html" target="_blank" rel="noopener">
+      <div class="swatch s2"><span class="t">Mokoena <b>&amp;</b> Naidoo</span></div>
+      <div class="pbody"><h3>Law firm website</h3><p>Professional-services site with practice areas, transparent fees and a consultation booking form.</p>
+      <div class="stack"><span>HTML/CSS</span><span>Forms</span><span>Accessible</span></div><span class="open">Open live demo →</span></div>
+    </a>
+    <a class="proj" href="demos/chairtime.html" target="_blank" rel="noopener">
+      <div class="swatch s3"><div class="bars"><span style="height:40%"></span><span style="height:70%"></span><span style="height:55%"></span><span style="height:90%"></span><span style="height:65%"></span><span style="height:80%"></span><span style="height:45%"></span><span style="height:100%"></span><span style="height:60%"></span></div><span class="t" style="font-size:20px;margin-top:10px">chairtime</span></div>
+      <div class="pbody"><h3>Salon booking dashboard</h3><p>Web app with live stylist timelines, booking status tracking, revenue stats and clash-checking.</p>
+      <div class="stack"><span>JavaScript</span><span>Web app</span><span>Dashboard</span></div><span class="open">Open live demo →</span></div>
+    </a>
+  </div>
+  <div class="real">
+    <span class="badge">Experience</span>
+    <div><h3>Junior Software Developer, ManTech Holdings</h3><p>September 2025 – September 2026. Built features on a multi-tenant SaaS product with a Django REST Framework backend, Next.js frontend, PostgreSQL and Docker, working in a team with Git flow and code review on every change.</p></div>
+  </div>
+</div></section>
+
+<section id="education"><div class="wrap">
+  <div class="head"><h2>Education</h2><span class="label">Richfield Graduate Institute of Technology · <span class="star">★</span> distinction</span></div>
+  <div class="edu">
+    <div class="qual">
+      <div class="qhead"><h3>BSc in Information Technology</h3><span class="status now">In progress · 2026</span></div>
+      <p class="qnote">Articulated from the diploma into the BSc.</p>
+      <div class="group"><span class="label">Semester 1</span><div class="mods"><span>Artificial Intelligence</span><span>Cloud Computing</span><span>Cyber Security</span><span>Computer Architecture</span><span>Programming 731</span><span>Mathematics 511</span></div></div>
+      <div class="group"><span class="label">Semester 2</span><div class="mods"><span>Machine Learning</span><span>Data Science</span><span>Big Data &amp; IoT</span><span>Mobile App Development</span><span>Server Technology</span><span>Programming 732</span><span>Mathematics 512</span><span>Work Integrated Learning 700</span></div></div>
+    </div>
+    <div class="qual">
+      <div class="qhead"><h3>Diploma in Information Technology</h3><span class="status">Graduated June 2026 · 6 distinctions</span></div>
+      <p class="qnote">Three years, 2023–2025.</p>
+      <div class="group"><span class="label">Software development</span><div class="mods"><span>Programming (6 modules, 511–632)</span><span>Software Development</span><span class="d">Software Engineering</span><span>IT Project</span><span>IT Project Management</span><span>Human Computer Interaction</span></div></div>
+      <div class="group"><span class="label">Web &amp; e-commerce</span><div class="mods"><span class="d">Web Technology 511</span><span>Web Technology 512</span><span>Internet Programming 621–622</span><span class="d">M-Commerce 621</span><span>M-Commerce 622</span></div></div>
+      <div class="group"><span class="label">Data, systems &amp; networks</span><div class="mods"><span>Database Systems 621–622</span><span>Information Systems 511–621</span><span class="d">Information Systems 622</span><span>Management Information Systems</span><span class="d">Networks 512</span><span>Networks 511</span><span>Operating Systems</span><span>Quantitative Techniques</span></div></div>
+      <div class="group"><span class="label">Professional</span><div class="mods"><span class="d">Work Integrated Learning 600</span><span>Business Communication</span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="services"><div class="wrap">
+  <div class="head"><h2>Services</h2><span class="label">Fixed quote before I start</span></div>
+  <table class="prices">
+    <tr><td><h3>Interactive website</h3></td><td><p>Premium site with scroll-driven animation, a preloader and smooth scrolling, built in Next.js and GSAP. Made to stand out for launches and premium brands.</p></td><td class="from"><b>from $400</b><small>SA clients from R7,000</small></td></tr>
+    <tr><td><h3>Business website</h3></td><td><p>3–5 page responsive site with contact form, WhatsApp button, Google Maps and basic SEO. Ready in about a week.</p></td><td class="from"><b>from $150</b><small>SA clients from R2,500</small></td></tr>
+    <tr><td><h3>Booking system or dashboard</h3></td><td><p>Custom web app for appointments, orders, stock or clients, with logins and an admin panel.</p></td><td class="from"><b>from $500</b><small>quoted per project</small></td></tr>
+    <tr><td><h3>Backend &amp; APIs</h3></td><td><p>Django REST APIs for your web or mobile app: database design, authentication and documentation.</p></td><td class="from"><b>from $150</b><small>per module</small></td></tr>
+    <tr><td><h3>Fixes &amp; new features</h3></td><td><p>Bugs fixed or features added to an existing Django, React or Next.js project.</p></td><td class="from"><b>from $80</b><small>per task</small></td></tr>
+  </table>
+</div></section>
+
+<section><div class="wrap">
+  <div class="head"><h2>How we'll work</h2></div>
+  <ol class="steps">
+    <li><h3>Email your brief</h3><p>Send a detailed write-up of what you need: what the site or app should do, the pages or features, any examples you like, and your deadline. I reply with questions or a clear yes.</p></li>
+    <li><h3>Written quote</h3><p>A fixed price, a list of what's included, and a delivery date.</p></li>
+    <li><h3>Build with updates</h3><p>You get a preview link and progress updates every few days.</p></li>
+    <li><h3>Launch &amp; handover</h3><p>I put it live, show you how to use it, and you own all the code.</p></li>
+  </ol>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <div class="head"><h2>Let's build something</h2><span class="label">Reply within 24 hours</span></div>
+  <p style="color:var(--muted);max-width:60ch;margin:-12px 0 24px">Email me your project brief. The more detail you include (features, pages, examples, budget and deadline), the faster I can send you an accurate quote.</p>
+  <div class="contact">
+    <div class="cbox"><span class="label">Email</span><code id="em">andisap1@icloud.com</code><button type="button" data-copy="em">Copy email</button></div>
+    <div class="cbox"><span class="label">GitHub</span><code>github.com/Andisa05</code><a href="https://github.com/Andisa05" target="_blank" rel="noopener">View my code →</a></div>
+  </div>
+</div></section>
+
+<div class="wrap"><footer>© 2026 Andisa Mtshali · Full-stack web developer · Gauteng, South Africa</footer></div>
+
+<script>
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var el=document.getElementById(b.dataset.copy),old=b.textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
+    try{navigator.clipboard.writeText(el.textContent).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent=old},1500)},sel)}catch(e){sel()}
+  });
+});
+</script>
+</body>
+</html>

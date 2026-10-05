@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chairtime Salon Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: app shell — slim top bar, KPI row, stylist timeline (left, wide) + bookings list & add form (right) */
+:root{
+  --bg:#F4F3F6; --panel:#FFFFFF; --fg:#1D1A24; --muted:#6B6677; --line:#E3E0E8;
+  --accent:#B4235A; --accent-soft:#F8E3EB;
+  --ok:#1F7A4D; --ok-soft:#E1F2E8; --warn:#9A6200; --warn-soft:#FBF0D9; --bad:#B42318; --bad-soft:#FBE4E1;
+  --ui:"Schibsted Grotesk",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141218; --panel:#1C1A22; --fg:#ECE9F1; --muted:#A39DAF; --line:#2E2A36;
+  --accent:#F06A9A; --accent-soft:#3A1D2A;
+  --ok:#5FD39A; --ok-soft:#173226; --warn:#F2B950; --warn-soft:#352A12; --bad:#FF8A7E; --bad-soft:#3A1A17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141218; --panel:#1C1A22; --fg:#ECE9F1; --muted:#A39DAF; --line:#2E2A36;
+  --accent:#F06A9A; --accent-soft:#3A1D2A;
+  --ok:#5FD39A; --ok-soft:#173226; --warn:#F2B950; --warn-soft:#352A12; --bad:#FF8A7E; --bad-soft:#3A1A17; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:14px/1.5 var(--ui)}
+.shell{max-width:1240px;margin:0 auto;padding:0 16px 40px}
+.demo{font-size:12px;text-align:center;padding:6px 16px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:18px;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.02em}
+.brand span{color:var(--accent)}
+.date{color:var(--muted);font-weight:500}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi small{color:var(--muted);font-weight:500;display:block}
+.kpi b{font:500 26px var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi em{font-style:normal;font-size:12px;color:var(--muted)}
+.main{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:960px){.main{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.panel h2{font-size:15px;margin:0 0 12px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.scroll{overflow-x:auto}
+.timeline{display:grid;grid-template-columns:90px repeat(18,minmax(34px,1fr));min-width:720px;position:relative}
+.timeline .h{font:500 11px var(--mono);color:var(--muted);border-left:1px solid var(--line);padding:0 0 6px 4px}
+.timeline .h.blank{border:0}
+.row{display:contents}
+.who{padding:10px 8px 10px 0;font-weight:600;border-top:1px solid var(--line)}
+.who small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.lane{grid-column:2 / -1;position:relative;border-top:1px solid var(--line);height:58px;
+  background-image:linear-gradient(to right,var(--line) 1px,transparent 1px);background-size:calc(100%/18) 100%}
+.appt{position:absolute;top:7px;bottom:7px;border-radius:6px;padding:4px 7px;font-size:12px;line-height:1.25;overflow:hidden;
+  background:var(--accent-soft);color:var(--fg);border-left:3px solid var(--accent);cursor:pointer}
+.appt b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appt span{color:var(--muted);white-space:nowrap}
+.appt.done{background:var(--ok-soft);border-color:var(--ok)}
+.appt.noshow{background:var(--bad-soft);border-color:var(--bad);opacity:.8}
+.now{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);pointer-events:none}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font:500 12px var(--ui);padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--panel);border-color:var(--fg)}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.list li > *{min-width:0}
+.t{font:500 13px var(--mono);font-variant-numeric:tabular-nums}
+.list .svc{color:var(--muted);font-size:12px}
+.pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;border:0;cursor:pointer;font-family:var(--ui)}
+.pill.booked{background:var(--warn-soft);color:var(--warn)}
+.pill.done{background:var(--ok-soft);color:var(--ok)}
+.pill.noshow{background:var(--bad-soft);color:var(--bad)}
+.hint{color:var(--muted);font-size:12px;margin:8px 0 0}
+form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+form .full{grid-column:1/-1}
+label{font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px}
+input,select{width:100%;font:14px var(--ui);padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
+.add{grid-column:1/-1;font:600 14px var(--ui);padding:10px;border:0;border-radius:6px;background:var(--accent);color:#fff;cursor:pointer}
+:root[data-theme="dark"] .add{color:#1D1A24}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .add{color:#1D1A24}}
+.err{grid-column:1/-1;color:var(--bad);font-size:13px;margin:0}
+button:focus-visible,input:focus,select:focus,.appt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.side{display:grid;gap:16px}
+</style>
+</head>
+<body>
+<div class="demo">Demo web app built by Andisa Mtshali, with sample data. Click a booking's status to change it, or add a new one.</div>
+<div class="shell">
+  <div class="top">
+    <div class="brand">chair<span>time</span> <span style="color:var(--muted);font-weight:500;font-size:14px">· Fade &amp; Fringe, Rosebank</span></div>
+    <div class="date">Tuesday, 6 October 2026</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><small>Bookings today</small><b id="k-count">0</b> <em id="k-count-sub"></em></div>
+    <div class="kpi"><small>Expected revenue</small><b id="k-rev">R0</b> <em>incl. VAT</em></div>
+    <div class="kpi"><small>Chair utilisation</small><b id="k-util">0%</b> <em>08:00–17:00</em></div>
+    <div class="kpi"><small>No-shows</small><b id="k-ns">0</b> <em id="k-ns-sub"></em></div>
+  </div>
+
+  <div class="main">
+    <div class="panel">
+      <h2>Today's chairs</h2>
+      <div class="scroll"><div class="timeline" id="tl"></div></div>
+      <p class="hint">Each column is 30 minutes. Click an appointment to mark it done.</p>
+    </div>
+    <div class="side">
+      <div class="panel">
+        <h2>Bookings
+          <span class="filters" id="filters">
+            <button class="chip" data-f="all" aria-pressed="true">All</button>
+            <button class="chip" data-f="booked" aria-pressed="false">Upcoming</button>
+            <button class="chip" data-f="done" aria-pressed="false">Done</button>
+            <button class="chip" data-f="noshow" aria-pressed="false">No-show</button>
+          </span>
+        </h2>
+        <ul class="list" id="list"></ul>
+      </div>
+      <div class="panel">
+        <h2>New booking</h2>
+        <form id="f">
+          <div class="full"><label for="c">Client</label><input id="c" value="Ayanda Zulu" required></div>
+          <div><label for="s">Stylist</label><select id="s"></select></div>
+          <div><label for="v">Service</label><select id="v"></select></div>
+          <div><label for="tm">Start</label><input id="tm" type="time" step="1800" value="15:30" min="08:00" max="16:30"></div>
+          <div><label for="ph">Phone</label><input id="ph" value="073 000 4411"></div>
+          <p class="err" id="err" hidden></p>
+          <button class="add" type="submit">Add booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var START=8, SLOTS=18; // 08:00–17:00, 30-min slots
+var stylists=[{id:'nm',name:'Naledi',role:'Braids & locs'},{id:'kj',name:'Kagiso',role:'Barber'},{id:'tm',name:'Tumi',role:'Colour & cuts'}];
+var services={ 'Knotless braids':{min:180,price:950}, 'Fade & beard':{min:45,price:220}, 'Cut & blow-dry':{min:60,price:380},
+  'Silk press':{min:90,price:520}, 'Loc retwist':{min:90,price:450}, 'Kids cut':{min:30,price:120}, 'Full colour':{min:120,price:1100} };
+var bookings=[
+  {c:'Lindiwe M.',s:'nm',v:'Knotless braids',t:'08:00',st:'done'},
+  {c:'Zanele K.',s:'nm',v:'Loc retwist',t:'12:00',st:'booked'},
+  {c:'Busi N.',s:'nm',v:'Silk press',t:'14:00',st:'booked'},
+  {c:'Thabo S.',s:'kj',v:'Fade & beard',t:'08:30',st:'done'},
+  {c:'Musa D.',s:'kj',v:'Fade & beard',t:'09:30',st:'noshow'},
+  {c:'Lwazi P.',s:'kj',v:'Kids cut',t:'10:30',st:'done'},
+  {c:'Sibusiso T.',s:'kj',v:'Fade & beard',t:'13:00',st:'booked'},
+  {c:'Karabo L.',s:'kj',v:'Fade & beard',t:'15:00',st:'booked'},
+  {c:'Michelle v.d.M.',s:'tm',v:'Full colour',t:'09:00',st:'done'},
+  {c:'Refilwe O.',s:'tm',v:'Cut & blow-dry',t:'12:30',st:'booked'},
+  {c:'Naomi R.',s:'tm',v:'Silk press',t:'14:30',st:'booked'}
+];
+var filter='all', NOW='11:45';
+function mins(t){var p=t.split(':');return +p[0]*60+ +p[1]}
+function fmtR(n){return 'R'+n.toLocaleString('en-ZA').replace(/ /g,' ')}
+var order=['booked','done','noshow'], label={booked:'Upcoming',done:'Done',noshow:'No-show'};
+
+function render(){
+  var tl=document.getElementById('tl'), h='<div class="h blank"></div>';
+  for(var i=0;i<SLOTS;i++){var m=START*60+i*30;h+='<div class="h">'+(i%2?'':String(m/60).padStart(2,'0')+':00')+'</div>'}
+  stylists.forEach(function(s){
+    h+='<div class="row"><div class="who">'+s.name+'<small>'+s.role+'</small></div><div class="lane">';
+    bookings.forEach(function(b,idx){ if(b.s!==s.id)return;
+      var off=(mins(b.t)-START*60)/(SLOTS*30)*100, w=services[b.v].min/(SLOTS*30)*100;
+      h+='<div class="appt '+b.st+'" tabindex="0" data-i="'+idx+'" style="left:calc('+off+'% + 2px);width:calc('+w+'% - 4px)" title="'+b.c+' · '+b.v+'"><b>'+b.c+'</b><span>'+b.v+'</span></div>';
+    });
+    var nowOff=(mins(NOW)-START*60)/(SLOTS*30)*100;
+    h+='<div class="now" style="left:'+nowOff+'%"></div></div></div>';
+  });
+  tl.innerHTML=h;
+
+  var sorted=bookings.map(function(b,i){return Object.assign({i:i},b)}).sort(function(a,b){return mins(a.t)-mins(b.t)});
+  document.getElementById('list').innerHTML=sorted.filter(function(b){return filter==='all'||b.st===filter}).map(function(b){
+    var sty=stylists.find(function(s){return s.id===b.s}).name;
+    return '<li><span class="t">'+b.t+'</span><div><div><b>'+b.c+'</b></div><div class="svc">'+b.v+' · '+sty+' · '+fmtR(services[b.v].price)+'</div></div><button class="pill '+b.st+'" data-i="'+b.i+'" title="Change status">'+label[b.st]+'</button></li>';
+  }).join('') || '<li><span></span><span class="svc">No bookings in this view.</span><span></span></li>';
+
+  var live=bookings.filter(function(b){return b.st!=='noshow'});
+  var rev=live.reduce(function(a,b){return a+services[b.v].price},0);
+  var used=live.reduce(function(a,b){return a+services[b.v].min},0);
+  var ns=bookings.filter(function(b){return b.st==='noshow'});
+  document.getElementById('k-count').textContent=bookings.length;
+  document.getElementById('k-count-sub').textContent=bookings.filter(function(b){return b.st==='booked'}).length+' still to come';
+  document.getElementById('k-rev').textContent=fmtR(rev);
+  document.getElementById('k-util').textContent=Math.round(used/(stylists.length*SLOTS*30)*100)+'%';
+  document.getElementById('k-ns').textContent=ns.length;
+  document.getElementById('k-ns-sub').textContent=ns.length?fmtR(ns.reduce(function(a,b){return a+services[b.v].price},0))+' lost':'none today';
+}
+
+function cycle(i){var b=bookings[i];b.st=order[(order.indexOf(b.st)+1)%3];render()}
+document.getElementById('list').addEventListener('click',function(e){var p=e.target.closest('.pill');if(p)cycle(+p.dataset.i)});
+document.getElementById('tl').addEventListener('click',function(e){var a=e.target.closest('.appt');if(a){bookings[+a.dataset.i].st='done';render()}});
+document.getElementById('tl').addEventListener('keydown',function(e){var a=e.target.closest('.appt');if(a&&(e.key==='Enter'||e.key===' ')){e.preventDefault();bookings[+a.dataset.i].st='done';render()}});
+document.getElementById('filters').addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;filter=c.dataset.f;
+  this.querySelectorAll('.chip').forEach(function(x){x.setAttribute('aria-pressed',x===c)});render()});
+
+var sSel=document.getElementById('s'), vSel=document.getElementById('v');
+sSel.innerHTML=stylists.map(function(s){return '<option value="'+s.id+'">'+s.name+'</option>'}).join('');
+vSel.innerHTML=Object.keys(services).map(function(k){return '<option>'+k+'</option>'}).join('');
+sSel.value='nm'; vSel.value='Kids cut';
+document.getElementById('f').addEventListener('submit',function(e){
+  e.preventDefault();
+  var err=document.getElementById('err'), c=document.getElementById('c').value.trim(), t=document.getElementById('tm').value, s=sSel.value, v=vSel.value;
+  err.hidden=true;
+  if(!c||!t){err.textContent='Add a client name and a start time.';err.hidden=false;return}
+  var st=mins(t), en=st+services[v].min;
+  if(st<START*60||en>(START*60+SLOTS*30)){err.textContent='That booking runs past closing time (17:00). Pick an earlier start.';err.hidden=false;return}
+  var clash=bookings.find(function(b){if(b.s!==s||b.st==='noshow')return false;var bs=mins(b.t),be=bs+services[b.v].min;return st<be&&en>bs});
+  if(clash){err.textContent='That overlaps '+clash.c+' ('+clash.t+'). Choose another time or stylist.';err.hidden=false;return}
+  bookings.push({c:c,s:s,v:v,t:t,st:'booked'});render();
+  document.getElementById('c').value='';
+});
+render();
+</script>
+</body>
+</html>
